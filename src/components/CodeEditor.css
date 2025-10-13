@@ -1,0 +1,107 @@
+/* Wrapper tüm alanı kapsar */
+.code-editor-wrapper {
+  display: flex;
+  flex-direction: column;
+  height: 100vh; /* ekran yüksekliği kadar */
+  width: 100%;
+}
+
+/* Dosya Sekmeleri */
+.file-tabs {
+  display: flex;
+  gap: 5px;
+  background-color: #1e1e1e;
+  padding: 5px;
+  overflow-x: auto;
+  white-space: nowrap;
+  border-radius: 8px 8px 0 0;
+  flex-shrink: 0;
+}
+
+/* Her bir sekme */
+.file-tab {
+  padding: 5px 10px;
+  background: #2e2e2e;
+  color: white;
+  border-radius: 4px 4px 0 0;
+  cursor: pointer;
+  user-select: none;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  flex-shrink: 0;
+}
+
+.file-tab.active {
+  background: #4e4e4e;
+  font-weight: bold;
+}
+
+.file-tab span {
+  color: red;
+  cursor: pointer;
+}
+
+.add-file-btn {
+  background: #3e3e3e;
+  color: white;
+  border: none;
+  border-radius: 4px 4px 0 0;
+  cursor: pointer;
+  padding: 0 8px;
+  flex-shrink: 0;
+}
+
+.file-edit-input {
+  padding: 5px 10px;
+  font-size: 14px;
+  font-family: monospace;
+  border-radius: 4px;
+  border: 1px solid #555;
+  background: #2e2e2e;
+  color: white;
+  flex-shrink: 0;
+  width: 100px;
+}
+
+/* Code Editor Container */
+.code-editor-container {
+  display: flex;
+  flex: 1; /* kalan tüm alanı kapla */
+  background-color: #282c34;
+  color: white;
+  font-family: monospace;
+  font-size: 14px;
+  border-radius: 0 0 8px 8px;
+  overflow: hidden; /* sadece satır numarası ve textarea scroll */
+}
+
+/* Satır Numaraları */
+.line-numbers {
+  padding: 15px 10px;
+  background-color: #3e4451;
+  color: #b0b0b0;
+  text-align: right;
+  user-select: none;
+  line-height: 1.5;
+  overflow-y: auto;
+}
+
+/* Kod Textarea */
+.editor-textarea {
+  flex-grow: 1; /* yatay alanı kaplar */
+  padding: 15px;
+  border: none;
+  outline: none;
+  resize: none;
+  background-color: #282c34;
+  color: #00ff88;
+  line-height: 1.5;
+  caret-color: white;
+  tab-size: 4;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  font-family: monospace;
+  font-size: 14px;
+  overflow-y: auto;
+}
