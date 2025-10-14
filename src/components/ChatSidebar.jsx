@@ -1,6 +1,7 @@
 import React, { useState, useRef, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { addMessage, clearMessages } from "../store";
+import { sendMessageToAI } from "./aiManager"; // AI entegrasyonu
 import "./ChatSidebar.css";
 
 export default function ChatSidebar() {
@@ -17,26 +18,22 @@ export default function ChatSidebar() {
   const scrollToTop = () => {
     requestAnimationFrame(() => {
       if (!listRef.current) return;
-      listRef.current.scrollTop = 0; // yeni mesaj başa
+      listRef.current.scrollTop = 0;
     });
   };
 
-  const handleSend = () => {
+
+  const handleSend = async () => {
     const text = input.trim();
     if (!text) return;
 
-    dispatch(addMessage({ id: Date.now(), role: "user", text }));
-    setInput("");
+    setInput(""); 
 
-    setTimeout(() => {
-      dispatch(
-        addMessage({
-          id: Date.now() + 1,
-          role: "assistant",
-          text: `Bunu anladım: "${text}" — burada gerçek AI çağrısı yapabilirsin.`,
-        })
-      );
-    }, 700);
+
+    dispatch(addMessage({ id: Date.now(), role: "user", text }));
+
+
+    await sendMessageToAI(text, "Friendly AI that answers in Turkish.");
   };
 
   const handleKeyDown = (e) => {
@@ -48,6 +45,7 @@ export default function ChatSidebar() {
 
   return (
     <aside className="chat-sidebar">
+      {/* Input */}
       <div className="chat-topbar">
         <input
           className="chat-input-top"
@@ -61,6 +59,7 @@ export default function ChatSidebar() {
         </button>
       </div>
 
+      {/* Mesajlar */}
       <div className="messages" ref={listRef}>
         {messages.length === 0 && (
           <div className="empty-note">Henüz bir sohbet yok :)</div>
@@ -75,6 +74,7 @@ export default function ChatSidebar() {
         ))}
       </div>
 
+      {/* Clear*/}
       <div className="chat-footer">
         <button className="tiny" onClick={() => dispatch(clearMessages())}>
           Clear

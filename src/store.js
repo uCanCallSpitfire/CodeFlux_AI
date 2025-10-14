@@ -1,6 +1,6 @@
 import { configureStore, createSlice } from "@reduxjs/toolkit";
 
-// Global slice: chat + code editor
+// Global 
 const globalSlice = createSlice({
   name: "global",
   initialState: {
