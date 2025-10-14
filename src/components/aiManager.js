@@ -7,22 +7,23 @@ export async function sendMessageToAI(userMessage) {
     const activeFile = store.getState().global.activeFile;
     const currentCode = currentFiles[activeFile] || ""; 
 
-    const systemPrompt = `
-Lütfen cevabı AŞAĞIDAKİ TEPKİ FORMATINDA ver. SADECE JSON çıktısı üret.
+     const systemPrompt = `
+Please respond ONLY in the FOLLOWING RESPONSE FORMAT. Produce ONLY a pure JSON output. 
+Also, reply in the same language as the user.
 
 Format:
 {
-  "chat": "...kullanıcıya gösterilecek mesaj...",
-  "code": "...KOD DÜZELTİLDİYSE veya YENİ KOD ÜRETİLDİYSE, DOSYANIN TAM VE SON HALİ BURAYA YAZILMALIDIR. Aksi halde bu alan BOŞ BIRAKILMALIDIR. (Null olmalı) "
+  "chat": "...message to display to the user...",
+  "code": "...IF THE CODE WAS FIXED OR NEW CODE WAS GENERATED, WRITE THE COMPLETE AND FINAL CODE HERE. Otherwise, leave this field EMPTY (null)..."
 }
 
 ---
-Kullanıcının isteği, aşağıdaki mevcut kod ile ilgilidir.
-Lütfen isteği yerine getirirken bu mevcut kodu dikkate al.
-EĞER KODU DÜZELTİYORSAN, DÜZELTİLMİŞ KODUN TAMAMINI 'code' alanına yerleştirmek ZORUNDASIN.
+The user's request is related to the code below.
+Please take this existing code into account when fulfilling the request.
+IF YOU FIX THE CODE, YOU MUST PLACE THE FULL FIXED VERSION OF THE CODE IN THE 'code' FIELD.
 
-Dosya Adı: ${activeFile}
-Mevcut Kod:
+File Name: ${activeFile}
+Current Code:
 \`\`\`javascript
 ${currentCode}
 \`\`\`
