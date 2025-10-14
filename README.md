@@ -25,6 +25,8 @@ Unlike ordinary assistants, CodeFlux AI can process and keep **context across mu
 > “It doesn’t just fix your mistakes — it teaches you how to stop making them.”
 
 ---
+<img width="1910" height="1018" alt="Image" src="https://github.com/user-attachments/assets/6774c4db-daeb-4072-95db-9fab13d5968e" />
+---
 
 ## 🚀 Features
 
