@@ -110,6 +110,7 @@ Usage limits or quota issues
 Data handling or billing problems
 
 This tool is provided as-is, for educational and development purposes, and remains in Beta.
+<p align="center">Made with ❤️ by Efe</p> ```
 
 🧑‍💻 Author
 
