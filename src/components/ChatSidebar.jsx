@@ -1,39 +1,42 @@
-import React, { useState, useRef, useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import React, { useEffect, useRef, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { addMessage, clearMessages } from "../store";
-import { sendMessageToAI } from "./aiManager"; // AI entegrasyonu
+import { sendMessageToAI } from "./aiManager";
 import "./ChatSidebar.css";
+
+const quickPrompts = [
+  "Bu kodu düzelt ve temizle",
+  "Hataları bul",
+  "Daha okunabilir hale getir",
+];
 
 export default function ChatSidebar() {
   const [input, setInput] = useState("");
+  const [isSending, setIsSending] = useState(false);
   const messages = useSelector((state) => state.global.messages);
   const dispatch = useDispatch();
-
   const listRef = useRef(null);
 
   useEffect(() => {
-    scrollToTop();
-  }, [messages]);
-
-  const scrollToTop = () => {
     requestAnimationFrame(() => {
       if (!listRef.current) return;
-      listRef.current.scrollTop = 0;
+      listRef.current.scrollTop = listRef.current.scrollHeight;
     });
-  };
+  }, [messages, isSending]);
 
+  const handleSend = async (presetText = "") => {
+    const text = (presetText || input).trim();
+    if (!text || isSending) return;
 
-  const handleSend = async () => {
-    const text = input.trim();
-    if (!text) return;
-
-    setInput(""); 
-
-
+    setInput("");
     dispatch(addMessage({ id: Date.now(), role: "user", text }));
 
-
-    await sendMessageToAI(text, "Friendly AI that answers in Turkish.");
+    try {
+      setIsSending(true);
+      await sendMessageToAI(text);
+    } finally {
+      setIsSending(false);
+    }
   };
 
   const handleKeyDown = (e) => {
@@ -45,39 +48,72 @@ export default function ChatSidebar() {
 
   return (
     <aside className="chat-sidebar">
-      {/* Input */}
+      <div className="brand-row">
+        <div>
+          <strong>CodeFlux AI</strong>
+          <span>React kod asistanı</span>
+        </div>
+      </div>
+
       <div className="chat-topbar">
         <input
           className="chat-input-top"
-          placeholder="Type your question here..."
+          placeholder="Sorunu veya isteğini yaz..."
           value={input}
           onChange={(e) => setInput(e.target.value)}
           onKeyDown={handleKeyDown}
+          disabled={isSending}
         />
-        <button className="send-btn" onClick={handleSend}>
-          Send
+        <button
+          className="send-btn"
+          onClick={() => handleSend()}
+          disabled={isSending}
+        >
+          {isSending ? "..." : "Gönder"}
         </button>
       </div>
 
-      {/* Mesajlar */}
-      <div className="messages" ref={listRef}>
-        {messages.length === 0 && (
-          <div className="empty-note">Henüz bir sohbet yok :)</div>
-        )}
-        {messages.map((m) => (
-          <div
-            key={m.id}
-            className={`message ${m.role === "user" ? "msg-user" : "msg-assistant"}`}
+      <div className="quick-prompts">
+        {quickPrompts.map((prompt) => (
+          <button
+            key={prompt}
+            type="button"
+            onClick={() => handleSend(prompt)}
+            disabled={isSending}
           >
-            <div className="bubble">{m.text}</div>
-          </div>
+            {prompt}
+          </button>
         ))}
       </div>
 
-      {/* Clear*/}
+      <div className="messages" ref={listRef}>
+        {messages.length === 0 && (
+          <div className="empty-note">Henüz bir sohbet yok.</div>
+        )}
+        {messages.map((message) => (
+          <div
+            key={message.id}
+            className={`message ${
+              message.role === "user" ? "msg-user" : "msg-assistant"
+            }`}
+          >
+            <div className="bubble">{message.text}</div>
+          </div>
+        ))}
+        {isSending && (
+          <div className="message msg-assistant">
+            <div className="bubble typing">Yanıt hazırlanıyor...</div>
+          </div>
+        )}
+      </div>
+
       <div className="chat-footer">
-        <button className="tiny" onClick={() => dispatch(clearMessages())}>
-          Clear
+        <button
+          className="tiny"
+          onClick={() => dispatch(clearMessages())}
+          disabled={messages.length === 0 || isSending}
+        >
+          Sohbeti temizle
         </button>
       </div>
     </aside>

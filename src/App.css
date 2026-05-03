@@ -1,73 +1,62 @@
-/* Reset */
 * {
-  margin: 0;
-  padding: 0;
   box-sizing: border-box;
 }
 
-body, html {
-  height: 100%;
+html,
+body,
+#root {
   width: 100%;
+  height: 100%;
+  margin: 0;
 }
 
-/* App container */
+body {
+  overflow: hidden;
+  background: #0e1116;
+}
+
+button,
+input,
+textarea {
+  font-family: inherit;
+}
+
+.editor-wrapper {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  min-width: 0;
+  background: #0e1116;
+}
+
+.left-column {
+  display: flex;
+  min-width: 0;
+}
+
 .App {
   display: flex;
-  flex-direction: column;
-  height: 100vh;
-  width: 100vw;
-}
-
-/* Header ve Footer */
-header, footer {
-  height: 50px; /* Sabit yüksekliğe sahip */
-  line-height: 50px;
-  background-color: #111;
-  color: #fff;
-  text-align: center;
-  flex-shrink: 0; /* Küçülmesini engelle */
-}
-
-.main-content {
   flex: 1;
-  display: flex;
-  width: 100%;
-  flex-direction: row;
-  /* Desktop: yan yana */
-}
-
-/* Soldaki question alanı */
-/* Soldaki question alanı */
-.question-section {
-  flex: 1; /* width yerine flex kullan */
-  background-color: #222;
-  display: flex;
-  /* üstten başlasın */
-  padding: 10px;
+  min-width: 0;
   height: 100%;
-  overflow-y: auto;
-  word-wrap: break-word;
-  white-space: pre-wrap;
 }
 
-
-/* Sağdaki editor alanı için */
-.editor-wrapper {
-  flex: 1; /* width yerine flex kullan */
-  background-color: #1e1e1e;
-  display: flex;
-  
-  padding: 10px;
-  height: 100%;
-  overflow-y: auto;
-  word-wrap: break-word;
-  white-space: pre-wrap;
-}
-
-@media (max-width: 768px) {
-  .main-content {
-    flex-direction: column; /* Mobile: üst üste */
+@media (max-width: 860px) {
+  body {
+    overflow: auto;
   }
-  .editor-wrapper { flex-direction: column;}
-  .question-section{ flex-direction: column;}
+
+  .editor-wrapper {
+    flex-direction: column;
+    min-height: 100%;
+  }
+
+  .left-column,
+  .App {
+    width: 100%;
+  }
+
+  .App {
+    min-height: 58vh;
+  }
 }

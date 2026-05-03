@@ -1,107 +1,197 @@
-/* Wrapper tüm alanı kapsar */
 .code-editor-wrapper {
   display: flex;
   flex-direction: column;
-  height: 100vh; /* ekran yüksekliği kadar */
+  height: 100%;
+  min-width: 0;
   width: 100%;
+  background: #181b20;
+  color: #e6edf3;
 }
 
-/* Dosya Sekmeleri */
-.file-tabs {
-  display: flex;
-  gap: 5px;
-  background-color: #1e1e1e;
-  padding: 5px;
-  overflow-x: auto;
-  white-space: nowrap;
-  border-radius: 8px 8px 0 0;
-  flex-shrink: 0;
-}
-
-/* Her bir sekme */
-.file-tab {
-  padding: 5px 10px;
-  background: #2e2e2e;
-  color: white;
-  border-radius: 4px 4px 0 0;
-  cursor: pointer;
-  user-select: none;
+.editor-header {
   display: flex;
   align-items: center;
-  gap: 5px;
+  gap: 10px;
+  min-height: 48px;
+  padding: 8px 10px;
+  background: #15181d;
+  border-bottom: 1px solid #2a3138;
+}
+
+.file-tabs {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  min-width: 0;
+  overflow-x: auto;
+  white-space: nowrap;
+  flex: 1;
+}
+
+.file-tab,
+.add-file-btn,
+.editor-actions button {
+  height: 32px;
+  border: 1px solid #2f3741;
+  border-radius: 6px;
+  background: #20252c;
+  color: #dce6ef;
+  cursor: pointer;
+  font: inherit;
+  font-size: 13px;
+}
+
+.file-tab {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  max-width: 220px;
+  padding: 0 9px;
   flex-shrink: 0;
 }
 
 .file-tab.active {
-  background: #4e4e4e;
-  font-weight: bold;
+  background: #26364d;
+  border-color: #3b82f6;
+  color: white;
 }
 
-.file-tab span {
-  color: red;
+.file-name {
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.close-tab {
+  width: 20px;
+  height: 20px;
+  padding: 0;
+  border: 0;
+  border-radius: 4px;
+  background: transparent;
+  color: #f87171;
   cursor: pointer;
+  line-height: 1;
+}
+
+.close-tab:hover {
+  background: rgba(248, 113, 113, 0.12);
 }
 
 .add-file-btn {
-  background: #3e3e3e;
-  color: white;
-  border: none;
-  border-radius: 4px 4px 0 0;
-  cursor: pointer;
-  padding: 0 8px;
+  width: 34px;
   flex-shrink: 0;
+  font-size: 18px;
+  line-height: 1;
 }
 
 .file-edit-input {
-  padding: 5px 10px;
-  font-size: 14px;
-  font-family: monospace;
-  border-radius: 4px;
-  border: 1px solid #555;
-  background: #2e2e2e;
+  height: 32px;
+  width: 160px;
+  padding: 0 9px;
+  font: 13px ui-monospace, SFMono-Regular, Consolas, "Liberation Mono", monospace;
+  border-radius: 6px;
+  border: 1px solid #3b82f6;
+  background: #0f1318;
   color: white;
-  flex-shrink: 0;
-  width: 100px;
+  outline: none;
 }
 
-/* Code Editor Container */
+.editor-actions {
+  display: flex;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+.editor-actions button {
+  padding: 0 10px;
+}
+
+.editor-title-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  min-height: 44px;
+  padding: 8px 14px;
+  background: #1b2027;
+  border-bottom: 1px solid #2a3138;
+}
+
+.editor-title-row strong,
+.editor-title-row span {
+  display: block;
+}
+
+.editor-title-row strong {
+  font-size: 14px;
+}
+
+.editor-title-row span {
+  color: #94a3b8;
+  font-size: 12px;
+}
+
+.editor-status {
+  flex-shrink: 0;
+  text-align: right;
+}
+
 .code-editor-container {
   display: flex;
-  flex: 1; /* kalan tüm alanı kapla */
-  background-color: #282c34;
+  flex: 1;
+  min-height: 0;
+  background-color: #111827;
   color: white;
-  font-family: monospace;
-  font-size: 14px;
-  border-radius: 0 0 8px 8px;
-  overflow: hidden; /* sadece satır numarası ve textarea scroll */
+  font: 14px/1.55 ui-monospace, SFMono-Regular, Consolas, "Liberation Mono", monospace;
+  overflow: hidden;
 }
 
-/* Satır Numaraları */
 .line-numbers {
-  padding: 15px 10px;
-  background-color: #3e4451;
-  color: #b0b0b0;
+  width: 56px;
+  padding: 14px 10px;
+  background-color: #17202d;
+  color: #718096;
   text-align: right;
   user-select: none;
-  line-height: 1.5;
-  overflow-y: auto;
+  overflow: hidden;
+  flex-shrink: 0;
 }
 
-/* Kod Textarea */
 .editor-textarea {
-  flex-grow: 1; /* yatay alanı kaplar */
-  padding: 15px;
+  flex: 1;
+  min-width: 0;
+  padding: 14px;
   border: none;
   outline: none;
   resize: none;
-  background-color: #282c34;
-  color: #00ff88;
-  line-height: 1.5;
+  background-color: #111827;
+  color: #8ff0b2;
   caret-color: white;
-  tab-size: 4;
-  white-space: pre-wrap;
-  word-wrap: break-word;
-  font-family: monospace;
-  font-size: 14px;
-  overflow-y: auto;
+  tab-size: 2;
+  white-space: pre;
+  overflow: auto;
+  font: inherit;
+}
+
+.file-tab:hover,
+.add-file-btn:hover,
+.editor-actions button:hover,
+.tiny:hover,
+.quick-prompts button:hover {
+  border-color: #3b82f6;
+}
+
+@media (max-width: 860px) {
+  .editor-header {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .editor-actions {
+    width: 100%;
+  }
+
+  .editor-actions button {
+    flex: 1;
+  }
 }

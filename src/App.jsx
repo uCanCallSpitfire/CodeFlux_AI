@@ -1,21 +1,19 @@
-import React from 'react';
-import CodeEditor from './components/CodeEditor';
-import ChatSidebar from './components/ChatSidebar'; // Yeni chat component
-import './App.css';
+import React from "react";
+import ChatSidebar from "./components/ChatSidebar";
+import CodeEditor from "./components/CodeEditor";
+import "./App.css";
 
 function App() {
   return (
-    <div className="editor-wrapper">
-      
-      <div className="left-column">
+    <main className="editor-wrapper">
+      <section className="left-column" aria-label="AI sohbet paneli">
         <ChatSidebar />
-      </div>
+      </section>
 
-      
-      <div className="App">
+      <section className="App" aria-label="Kod editörü">
         <CodeEditor />
-      </div>
-    </div>
+      </section>
+    </main>
   );
 }
 

@@ -1,13 +1,23 @@
-const apiKey = "your gemini key";
-const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent?key=${apiKey}`;
+const apiKey = import.meta.env.VITE_GEMINI_API_KEY;
+const model = import.meta.env.VITE_GEMINI_MODEL || "gemini-2.5-flash";
+const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${apiKey}`;
 
 export async function askGemini(userMessage, systemPrompt) {
-  if (!userMessage.trim()) return { success: false, error: "Boş mesaj gönderemezsin." };
+  if (!userMessage.trim()) {
+    return { success: false, error: "Boş mesaj gönderemezsin." };
+  }
+
+  if (!apiKey) {
+    return {
+      success: false,
+      error:
+        "Gemini API anahtarı eksik. Proje köküne .env dosyası ekleyip VITE_GEMINI_API_KEY değerini gir.",
+    };
+  }
 
   const payload = {
     contents: [{ parts: [{ text: userMessage }] }],
     systemInstruction: { parts: [{ text: systemPrompt }] },
-    tools: [{ "google_search": {} }],
   };
 
   try {
@@ -18,19 +28,28 @@ export async function askGemini(userMessage, systemPrompt) {
     });
 
     if (!response.ok) {
-      const errorBody = await response.json();
-      return { success: false, error: `API Hatası: ${response.status} - ${errorBody.error?.message || 'Bilinmeyen hata'}` };
+      const errorBody = await response.json().catch(() => ({}));
+      return {
+        success: false,
+        error: `API hatası: ${response.status} - ${
+          errorBody.error?.message || "Bilinmeyen hata"
+        }`,
+      };
     }
 
     const result = await response.json();
     const outputText = result.candidates?.[0]?.content?.parts?.[0]?.text;
 
-    if (!outputText) return { success: false, error: "API cevabından metin alınamadı." };
+    if (!outputText) {
+      return { success: false, error: "API cevabından metin alınamadı." };
+    }
 
     return { success: true, text: outputText };
-
   } catch (err) {
-    console.error("Gemini API Hatası:", err);
-    return { success: false, error: "Yanıt alınırken bir hata oluştu. Konsolu kontrol et." };
+    console.error("Gemini API hatası:", err);
+    return {
+      success: false,
+      error: "Yanıt alınırken bir hata oluştu. Konsolu kontrol et.",
+    };
   }
 }

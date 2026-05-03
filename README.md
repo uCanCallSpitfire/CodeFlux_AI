@@ -1,121 +1,45 @@
-<h1 align="center">⚡ CodeFlux AI (Beta)</h1>
+# CodeFlux AI
 
-<p align="center">
-  <b>Next-generation React-based coding assistant for developers who demand speed, precision, and intelligence.</b><br>
-  <i>“If code flows, bugs can’t hold on.”</i>
-</p>
+React + Vite ile geliştirilmiş, Gemini API destekli hafif bir kod asistanı.
 
-<p align="center">
-  <img src="https://img.shields.io/badge/React-18+-61DAFB?logo=react&logoColor=white" />
-  <img src="https://img.shields.io/badge/Node.js-18+-339933?logo=node.js&logoColor=white" />
-  <img src="https://img.shields.io/badge/Vite-Build-FEAE2D?logo=vite&logoColor=white" />
-  <img src="https://img.shields.io/badge/Status-Beta-orange" />
-  <img src="https://img.shields.io/badge/License-All%20rights%20reserved-blue" />
-</p>
+## Özellikler
 
----
+- Sohbet panelinden aktif dosya hakkında AI yardımı alma
+- AI yanıtından gelen kodu aktif dosyaya otomatik uygulama
+- Çoklu dosya sekmeleri, yeniden adlandırma ve silme
+- Kod kopyalama, aktif dosyayı temizleme ve satır/karakter sayacı
+- LocalStorage ile sohbet ve dosyaları tarayıcıda saklama
+- Gemini API anahtarını `.env` üzerinden okuma
 
-## 🧠 Overview
+## Kurulum
 
-**CodeFlux AI** is a next-generation **React-based coding assistant** built for developers who want **speed, precision, and intelligence** in one place.  
-
-It reads your code, understands your intent, and instantly provides **solutions, fixes, and clear explanations**.  
-Unlike ordinary assistants, CodeFlux AI can process and keep **context across multiple files simultaneously**, allowing you to work seamlessly on full projects without losing focus.
-
-> “It doesn’t just fix your mistakes — it teaches you how to stop making them.”
-
----
-<img width="1910" height="1018" alt="Image" src="https://github.com/user-attachments/assets/6774c4db-daeb-4072-95db-9fab13d5968e" />
----
-
-## 🚀 Features
-
-- 🧩 **Context-Aware Understanding** – Reads and reasons across multiple files  
-- ⚙️ **Real-Time Assistance** – Writes, explains, and debugs code instantly  
-- 💬 **JSON-Based AI Responses** – Structured and predictable replies  
-- 🪶 **Lightweight UI** – Built with React + Vite for fast performance  
-- 🌓 **Dark Theme** – Modern, developer-friendly interface  
-- 🔄 **Adaptive Learning** – Improves with every interaction  
-
----
-
-## 🧰 Tech Stack
-
-| Category | Technologies |
-|-----------|---------------|
-| **Frontend** | React 18+, Vite |
-| **Language** | JavaScript (ES6+) |
-| **Backend** | Google Gemini API |
-| **State Management** | Custom global store |
-| **Environment** | Node.js 18+ |
-
----
-
-## ⚡ Getting Started
-
-Clone the repository:
-
-git clone https://github.com/yourusername/codeflux-ai.git
-cd codeflux-ai
+```bash
 npm install
+```
 
+Proje kökünde `.env` dosyası oluştur:
 
-Then open the file:
+```bash
+VITE_GEMINI_API_KEY=your-gemini-api-key
+VITE_GEMINI_MODEL=gemini-2.5-flash
+```
 
-src/components/askGemini.js
+Geliştirme sunucusunu başlat:
 
-
-Add your Gemini API key at the top:
-
-const GEMINI_API_KEY = "YOUR_API_KEY_HERE";
-
-
-(In this beta version, the key is stored directly inside the component.
-Future releases will use secure environment variables.)
-
-Start the development server:
-
+```bash
 npm run dev
+```
 
+Uygulama varsayılan olarak `http://localhost:5173` adresinde çalışır.
 
-Your app will be available at:
-👉 http://localhost:5173
+## Komutlar
 
-💡 How It Works
+```bash
+npm run dev
+npm run build
+npm run lint
+```
 
-Every message you send is processed through the Gemini API, interpreted by the CodeFlux Engine, and rendered instantly inside the editor.
-The AI delivers contextual, real-time assistance with structured JSON responses — ensuring precision, consistency, and reliability.
+## Notlar
 
-With CodeFlux AI, you can:
-
-Chat directly with the AI
-
-Write or debug code collaboratively
-
-Open and manage multiple tabs
-
-Request intelligent refactoring suggestions
-
-⚠️ Disclaimer
-
-CodeFlux AI uses Google’s Gemini API as its intelligence backbone.
-The Gemini API is currently free under specific usage limits, but terms may change at any time.
-
-The developer of CodeFlux AI is not responsible for:
-
-API downtime or service interruptions
-
-Pricing or policy changes
-
-Usage limits or quota issues
-
-Data handling or billing problems
-
-This tool is provided as-is, for educational and development purposes, and remains in Beta.
-<p align="center">Made with ❤️ by Efe</p> ```
-
-🧑‍💻 Author
-
-Efe – Creator of CodeFlux AI
-
-“If code flows, bugs can’t hold on.” ⚡
+AI katmanı Gemini API'ye doğrudan tarayıcıdan istek atar. Bu yaklaşım küçük denemeler için pratik olsa da gerçek üretim ortamında API anahtarını sunucu tarafında tutmak daha güvenlidir.
